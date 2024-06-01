@@ -95,23 +95,6 @@ def process_video(input_video_path, output_video_path, model, model_input_size):
         # Escribir el cuadro en el archivo de video
         out.write(bgr_frame)
 
-        # Guardar algunos cuadros individuales para inspección
-        #if frame_count % 30 == 0:
-            #print(f"Guardando cuadro {frame_count} para inspección")
-            #Image.fromarray(cv2.cvtColor(no_bg_image, cv2.COLOR_BGRA2RGBA)).save(f"frame_{frame_count}.png")
-
     cap.release()
     out.release()
     print("Procesamiento de video completado.")
-
-# Definir el tamaño de entrada del modelo
-model_input_size = [480, 854]  
-
-# Procesar el video
-input_video_path = './thatsMyOpinion.mp4'
-output_video_path = 'salida.avi'  
-process_video(input_video_path, output_video_path, model, model_input_size)
-
-# Abrir el video después de procesarlo
-if os.name == 'nt':  # Windows
-    os.system(f'start {output_video_path}')
