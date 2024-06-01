@@ -1,5 +1,6 @@
 from flask import Flask, jsonify, request
-from video_manager import upload_video, delete_video
+from video_manager.upload_video import upload_video
+from video_manager.delete_video import delete_video
 import os
 
 app = Flask(__name__)
@@ -23,7 +24,7 @@ def upload_hd():
     filename, response = upload_video()
     if filename:
         process_result = process_video_hd(filename)
-        delete_video(filename)
+        delete_response = delete_video(filename)
         return jsonify({'message': response.json['message'], 'processing_result': process_result}), 200
     return response
 
@@ -32,7 +33,7 @@ def upload_non_hd():
     filename, response = upload_video()
     if filename:
         process_result = process_video_non_hd(filename)
-        delete_video(filename)
+        delete_response = delete_video(filename)
         return jsonify({'message': response.json['message'], 'processing_result': process_result}), 200
     return response
 
