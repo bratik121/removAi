@@ -107,11 +107,16 @@ def process_video(input_video_path, output_video_path, model, model_input_size):
 # Definir el tamaño de entrada del modelo
 model_input_size = [480, 854]  
 
+
+
+
 # Procesar el video
-input_video_path = './thatsMyOpinion.mp4'
-output_video_path = 'salida.avi'  
-process_video(input_video_path, output_video_path, model, model_input_size)
+#input_video_path = './thatsMyOpinion.mp4'
+#output_video_path = 'salida.avi'  
+#process_video(input_video_path, output_video_path, model, model_input_size)
+
+
 
 # Abrir el video después de procesarlo
-if os.name == 'nt':  # Windows
-    os.system(f'start {output_video_path}')
+#if os.name == 'nt':  # Windows
+    #os.system(f'start {output_video_path}')
