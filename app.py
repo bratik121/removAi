@@ -1,4 +1,5 @@
-from flask import Flask, request, jsonify
+from flask import Flask, jsonify, request
+from video_manager import upload_video, delete_video
 import os
 
 app = Flask(__name__)
@@ -7,21 +8,33 @@ app = Flask(__name__)
 UPLOAD_FOLDER = 'static/uploads'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
-# Ruta principal para subir videos
-@app.route('/upload', methods=['POST'])
-def upload_video():
-    if 'file' not in request.files:
-        return jsonify({'error': 'No file part'}), 400
-    
-    file = request.files['file']
-    
-    if file.filename == '':
-        return jsonify({'error': 'No selected file'}), 400
-    
-    if file:
-        # Guardar el archivo en la carpeta de subida
-        file.save(os.path.join(app.config['UPLOAD_FOLDER'], file.filename))
-        return jsonify({'message': 'File uploaded successfully'}), 200
+def process_video_hd(filename):
+    # Lógica para procesar el video HD
+    # Aquí se procesaría el video (por ejemplo, remover el fondo)
+    return f"Processed HD video: {filename}"
+
+def process_video_non_hd(filename):
+    # Lógica para procesar el video no HD
+    # Aquí se procesaría el video (por ejemplo, remover el fondo)
+    return f"Processed non-HD video: {filename}"
+
+@app.route('/upload_hd', methods=['POST'])
+def upload_hd():
+    filename, response = upload_video()
+    if filename:
+        process_result = process_video_hd(filename)
+        delete_video(filename)
+        return jsonify({'message': response.json['message'], 'processing_result': process_result}), 200
+    return response
+
+@app.route('/upload_non_hd', methods=['POST'])
+def upload_non_hd():
+    filename, response = upload_video()
+    if filename:
+        process_result = process_video_non_hd(filename)
+        delete_video(filename)
+        return jsonify({'message': response.json['message'], 'processing_result': process_result}), 200
+    return response
 
 if __name__ == '__main__':
     if not os.path.exists(UPLOAD_FOLDER):
