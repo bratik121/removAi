@@ -45,7 +45,7 @@ def process_video(input_video_path, output_video_path, model, model_input_size):
     frame_height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
     fps = cap.get(cv2.CAP_PROP_FPS)
     
-    fourcc = cv2.VideoWriter_fourcc(*'DIVX')
+    fourcc = cv2.VideoWriter_fourcc(*'mp4v')  # Usar codec 'mp4v' para archivos mp4
     out = cv2.VideoWriter(output_video_path, fourcc, fps, (frame_width, frame_height), True)
     
     if not out.isOpened():
